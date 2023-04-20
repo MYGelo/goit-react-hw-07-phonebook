@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchContacts } from 'Redux/operations';
+import { selectError, selectIsLoading } from 'Redux/selectors';
 import { ContactsForm } from './contactForm/contactForm';
 import { ContactList } from './contactList/contactList';
 import { ContactFilter } from './Filter/Filter';
-// import { getTasks } from 'Redux/selectors';
+// import { selectTasks } from 'Redux/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { items, isLoading, error } = useSelector(state => state.contacts);
-  console.log(items, isLoading, error);
+  const isLoading = useDispatch(selectIsLoading);
+  const error = useDispatch(selectError);
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -26,14 +28,9 @@ export const App = () => {
         <h1>Phonebook</h1>
         <ContactsForm />
         <h2>Contacts</h2>
+        {isLoading && !error && <b>Request in progress...</b>}
         <ContactFilter />
         <ContactList />
-      </div>
-
-      <div>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        <p>{items.length > 0 && JSON.stringify(items, null, 2)}</p>
       </div>
     </>
   );

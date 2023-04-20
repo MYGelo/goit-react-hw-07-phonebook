@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { getStatusFilter, getTasks } from '../../Redux/selectors';
+import { deleteContact } from 'Redux/operations';
+import { selectStatusFilter, selectTasks } from '../../Redux/selectors';
 import css from './contactList.module.css';
-import { deleteContact } from 'Redux/contactSlice';
+// import { deleteContact } from 'Redux/contactSlice';
 
 export const ContactList = () => {
-  const contacts = useSelector(getTasks);
-  const filter = useSelector(getStatusFilter).toLowerCase();
+  const contacts = useSelector(selectTasks);
+  console.log(...contacts);
+  const filter = useSelector(selectStatusFilter).toLowerCase();
   const dataNormalize = filter.toLowerCase();
 
   const normalizedContacts = contacts.filter(contact =>
@@ -18,7 +20,6 @@ export const ContactList = () => {
         {normalizedContacts.map(contact => (
           <li key={contact.id} className={css.contact__list__item}>
             <span>{contact.name} : </span>
-            {/* <span>{contact.number} </span> */}
             <span>{contact.phone} </span>
             <button
               type="button"

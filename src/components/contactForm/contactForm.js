@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'components/Button/Button';
-import { addContact } from '../../Redux/contactSlice';
+// import { addContact } from '../../Redux/contactSlice';
 import css from './contactForm.module.css';
-import { getTasks } from 'Redux/selectors';
+import { selectTasks } from 'Redux/selectors';
+import { addContact } from 'Redux/operations';
 
 export const ContactsForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getTasks);
+  const contacts = useSelector(selectTasks);
 
   const handleSubmit = event => {
     event.preventDefault();

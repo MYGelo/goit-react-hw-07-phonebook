@@ -1,4 +1,13 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { fetchContacts, deleteContact, addContact } from './operations';
+
+const handlePending = state => {
+  state.isLoading = true;
+};
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const tasksSlice = createSlice({
   name: 'contacts',
@@ -7,45 +16,64 @@ const tasksSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {
-    fetchingInProgress(state) {
-      state.isLoading = true;
-    },
-    fetchingSuccess(state, action) {
+
+  extraReducers: {
+    [fetchContacts.pending]: handlePending,
+    [deleteContact.pending]: handlePending,
+    [addContact.pending]: handlePending,
+
+    [fetchContacts.rejected]: handleRejected,
+    [deleteContact.rejected]: handleRejected,
+    [addContact.rejected]: handleRejected,
+
+    [fetchContacts.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
       state.items = action.payload;
     },
-    fetchingError(state, action) {
+
+    [deleteContact.fulfilled](state, action) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = null;
+      const index = state.items.findIndex(
+        task => task.id === action.payload.id
+      );
+      state.items.splice(index, 1);
     },
 
-    addContact: {
-      reducer(state, action) {
-        state.items.push(action.payload);
-      },
-      prepare(name, phone) {
-        return {
-          payload: {
-            name,
-            phone,
-            id: nanoid(),
-          },
-        };
-      },
+    [addContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
     },
-    deleteContact(state, action) {
-      const index = state.items.findIndex(task => task.id === action.payload);
-      state.items.splice(index, 1);
+    prepare(name, phone) {
+      return {
+        payload: {
+          name,
+          phone,
+          id: nanoid(),
+        },
+      };
     },
   },
 });
-export const {
-  fetchingInProgress,
-  fetchingSuccess,
-  fetchingError,
-  addContact,
-  deleteContact,
-} = tasksSlice.actions;
+
+// export const { addContact } = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;
+
+// reducers: {
+//   addContact: {
+//     reducer(state, action) {
+//       state.items.push(action.payload);
+//     },
+//     prepare(name, phone) {
+//       return {
+//         payload: {
+//           name,
+//           phone,
+//           id: nanoid(),
+//         },
+//       };
+//     },
+//   },
+// },

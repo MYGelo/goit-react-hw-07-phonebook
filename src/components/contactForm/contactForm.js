@@ -22,7 +22,10 @@ export const ContactsForm = () => {
       return;
     }
 
-    dispatch(addContact(form.elements.text.value, form.elements.number.value));
+    dispatch(addContact(inputValue, form.elements.number.value));
+    // dispatch(
+    //   addContact({ name: inputValue, phone: form.elements.number.value })
+    // );
 
     form.reset();
   };

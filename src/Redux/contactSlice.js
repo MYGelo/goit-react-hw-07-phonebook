@@ -15,23 +15,27 @@ const tasksSlice = createSlice({
     items: [],
     isLoading: false,
     error: null,
+    filter: '',
   },
 
   extraReducers: {
     [fetchContacts.pending]: handlePending,
-    [deleteContact.pending]: handlePending,
-    [addContact.pending]: handlePending,
-
-    [fetchContacts.rejected]: handleRejected,
-    [deleteContact.rejected]: handleRejected,
-    [addContact.rejected]: handleRejected,
-
     [fetchContacts.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
       state.items = action.payload;
     },
+    [fetchContacts.rejected]: handleRejected,
 
+    [addContact.pending]: handlePending,
+    [addContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items.push(action.payload);
+    },
+    [addContact.rejected]: handleRejected,
+
+    [deleteContact.pending]: handlePending,
     [deleteContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
@@ -40,12 +44,7 @@ const tasksSlice = createSlice({
       );
       state.items.splice(index, 1);
     },
-
-    [addContact.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.items.push(action.payload);
-    },
+    [deleteContact.rejected]: handleRejected,
   },
 });
 

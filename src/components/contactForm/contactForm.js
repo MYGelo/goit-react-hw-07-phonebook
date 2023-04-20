@@ -3,7 +3,6 @@ import { Button } from 'components/Button/Button';
 import css from './contactForm.module.css';
 import { selectTasks } from 'Redux/selectors';
 import { addContact } from 'Redux/operations';
-// import { nanoid } from '@reduxjs/toolkit';
 
 export const ContactsForm = () => {
   const dispatch = useDispatch();

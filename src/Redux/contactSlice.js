@@ -50,20 +50,3 @@ const tasksSlice = createSlice({
 });
 
 export const tasksReducer = tasksSlice.reducer;
-
-// reducers: {
-//   addContact: {
-//     reducer(state, action) {
-//       state.items.push(action.payload);
-//     },
-//     prepare(name, phone) {
-//       return {
-//         payload: {
-//           name,
-//           phone,
-//           id: nanoid(),
-//         },
-//       };
-//     },
-//   },
-// },

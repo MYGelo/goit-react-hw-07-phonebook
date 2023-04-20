@@ -5,7 +5,6 @@ import { selectError, selectIsLoading } from 'Redux/selectors';
 import { ContactsForm } from './contactForm/contactForm';
 import { ContactList } from './contactList/contactList';
 import { ContactFilter } from './Filter/Filter';
-// import { selectTasks } from 'Redux/selectors';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -28,8 +27,8 @@ export const App = () => {
         <h1>Phonebook</h1>
         <ContactsForm />
         <h2>Contacts</h2>
-        {isLoading && !error && <b>Request in progress...</b>}
         <ContactFilter />
+        {isLoading && !error && <b>Request in progress...</b>}
         <ContactList />
       </div>
     </>

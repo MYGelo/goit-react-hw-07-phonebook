@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, deleteContact, addContact } from './operations';
 
 const handlePending = state => {
@@ -46,19 +46,9 @@ const tasksSlice = createSlice({
       state.error = null;
       state.items.push(action.payload);
     },
-    prepare(name, phone) {
-      return {
-        payload: {
-          name,
-          phone,
-          id: nanoid(),
-        },
-      };
-    },
   },
 });
 
-// export const { addContact } = tasksSlice.actions;
 export const tasksReducer = tasksSlice.reducer;
 
 // reducers: {

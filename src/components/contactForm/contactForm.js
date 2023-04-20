@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'components/Button/Button';
-// import { addContact } from '../../Redux/contactSlice';
 import css from './contactForm.module.css';
 import { selectTasks } from 'Redux/selectors';
 import { addContact } from 'Redux/operations';
+// import { nanoid } from '@reduxjs/toolkit';
 
 export const ContactsForm = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,12 @@ export const ContactsForm = () => {
       alert(`${inputValue} is already in contacts.`);
       return;
     }
-
-    dispatch(addContact(inputValue, form.elements.number.value));
-    // dispatch(
-    //   addContact({ name: inputValue, phone: form.elements.number.value })
-    // );
+    dispatch(
+      addContact({
+        name: inputValue,
+        phone: form.elements.number.value,
+      })
+    );
 
     form.reset();
   };

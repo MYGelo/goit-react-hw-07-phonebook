@@ -18,7 +18,8 @@ export const ContactList = () => {
         {normalizedContacts.map(contact => (
           <li key={contact.id} className={css.contact__list__item}>
             <span>{contact.name} : </span>
-            <span>{contact.number} </span>
+            {/* <span>{contact.number} </span> */}
+            <span>{contact.phone} </span>
             <button
               type="button"
               onClick={() => dispatch(deleteContact(contact.id))}

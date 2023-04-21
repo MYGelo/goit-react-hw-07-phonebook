@@ -1,7 +1,6 @@
 import { ProgressBar } from 'react-loader-spinner';
 
 export const Loader = () => {
-  console.log(`loader!`);
   return (
     <div>
       <ProgressBar
